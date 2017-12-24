@@ -73,7 +73,7 @@ public class MainMenu implements ActionListener {
     public void createWindow()
     {
         this.mainMenu = new JFrame();
-        this.mainMenu.setTitle("USM 98-99 Tweaker v1.0");
+        this.mainMenu.setTitle("USM 98-99 Tweaker v1.1");
         
         this.mainMenu.setSize(300, 270);
         this.mainMenu.setLocation(250, 250);

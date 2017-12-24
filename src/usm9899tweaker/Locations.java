@@ -37,6 +37,9 @@ public class Locations {
 
     // Starting year locations
     private static List<Integer> TRANSFERT_MODE;
+    
+    // No firing
+    final public static long NO_FIRING = 443419;
 
     /**
      * Return the position of the starting year spots

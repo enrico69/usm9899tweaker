@@ -28,6 +28,10 @@ public class Values {
     final public static int CHEAT_MENU_ORIGIN_VALUE = -123;
     final public static int CHEAT_MENU_TARGET_VALUE = -124;
     
+    // No firing
+    final public static int NO_FIRING_ORIGIN_VALUE = 1;
+    final public static int NO_FIRING_TARGET_VALUE = 0;
+    
     // Transfert locations
     private static List<Integer> TRANSFERT_MODE_ORIGIN;
     private static List<Integer> TRANSFERT_MODE_TARGET;

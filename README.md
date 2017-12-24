@@ -9,3 +9,6 @@ Any issue can be send to the development team via the creation of a ticket in th
 
 ## Documentation and credits
 All the credits and usage informations are in the documentation file.
+
+## Code
+The code is given here "as is": it is a quick patcher ... written quickly, so do not expect it respects any code standard or quality gate.

@@ -39,6 +39,7 @@ public class PatchGame implements ActionListener {
     final private JTextField startingYearValue = new JTextField();
     final private JButton cheatMenuButton = new JButton("");
     final private JButton transfertModeButton = new JButton("");
+    final private JButton firingModeButton = new JButton("");
     
     /* Variables use for processing */
     private boolean firstTime = false;
@@ -48,6 +49,7 @@ public class PatchGame implements ActionListener {
     private boolean areLongTermLoansEnabled = false;
     private boolean isCheatMenuEnabled = false;
     private boolean transfertStandardMode = true;
+    private boolean firingStandardMode = true;
       
     /**
      * Constructor
@@ -118,6 +120,9 @@ public class PatchGame implements ActionListener {
                 
                 // Check transfert mode
                 this.checkIfTransfertStandardMode();
+                
+                // Check firing mode
+                this.checkIfFiringStandardMode();
                 
                 // Opening the patching panel
                 this.openPanel(lFirstQtyLoanVal[0], startingYear);
@@ -286,6 +291,25 @@ public class PatchGame implements ActionListener {
         this.transfertModeButton.addActionListener((ActionListener) this);
         
         //-----------------------------------------
+        // No Firing
+        //-----------------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 5;
+        JLabel firingMenuLabel = new JLabel("Enable / Disable the fact that you can be fired");
+        windowContent.add(firingMenuLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 5;
+        
+        this.updateFiringButtonLabel();
+        this.firingModeButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.firingModeButton, c);
+        this.firingModeButton.addActionListener((ActionListener) this);
+        
+        //-----------------------------------------
         // Display
         //-----------------------------------------
         this.patchScreen.setVisible(true);
@@ -408,6 +432,22 @@ public class PatchGame implements ActionListener {
                 
                 this.checkIfTransfertStandardMode();
                 this.updateTransfertButtonLabel();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle of the firing mode
+        if(ev.getSource() == this.firingModeButton)
+        {
+            this.changeFormStatus(false);
+            try {
+                System.out.println("Switching firing mode...");
+                this.switchFiringMode();
+                this.checkIfFiringStandardMode();
+                this.updateFiringButtonLabel();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -649,6 +689,21 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(Values.CHEAT_MENU_TARGET_VALUE);
     }
     
+    private void switchFiringMode() throws IOException
+    {
+        long target = Locations.NO_FIRING;
+        int value = Values.NO_FIRING_TARGET_VALUE;
+        
+        if(!this.firingStandardMode) {
+            value = Values.NO_FIRING_ORIGIN_VALUE; 
+        }
+        
+        System.out.println("Firing value: " + value);
+        
+        BinaryFileHelper.getInstance().goToByte(target);
+        BinaryFileHelper.getInstance().writeIntValue(value);
+    }
+    
     /**
      * Disable cheat menu
      * @throws IOException 
@@ -685,6 +740,22 @@ public class PatchGame implements ActionListener {
     }
     
     /**
+     * Check if the firing mode
+     * @throws java.io.IOException
+     */
+    private void checkIfFiringStandardMode() throws IOException {
+        byte[] readVal = BinaryFileHelper.getInstance().getFilePart(Locations.NO_FIRING, 1);
+        System.out.println("No firing read value: " + readVal[0]);
+
+        if(readVal[0] == Values.NO_FIRING_ORIGIN_VALUE) {
+            System.out.println("firing values match");
+            this.firingStandardMode = true;
+        } else {
+            this.firingStandardMode = false;
+        }
+    }
+    
+    /**
      * Update the status of the transfert mode button
      */
     private void updateTransfertButtonLabel() {
@@ -692,6 +763,18 @@ public class PatchGame implements ActionListener {
             this.transfertModeButton.setText("Disable transferts");
         } else {
             this.transfertModeButton.setText("Enable transferts");
+        }
+    }
+    
+    /**
+     * Update the status of the firing mode button
+     */
+    private void updateFiringButtonLabel()
+    {
+        if(this.firingStandardMode) {
+            this.firingModeButton.setText("Disable");
+        } else {
+            this.firingModeButton.setText("Enable");
         }
     }
     
