@@ -22,8 +22,7 @@ public class MainMenu implements ActionListener {
     
     private JFrame mainMenu;
     
-    final private static JButton patchGameButton = new JButton("Patch the game");
-    final private static JButton editSaveGameButton = new JButton("Edit a savegame");
+    final private static JButton patchGameButton = new JButton("Patch menu");
     final private static JButton aboutButton = new JButton("About");
     final private static JButton quitButton = new JButton("Exit");
     public static String iconName = "mainIcon.png";
@@ -73,9 +72,9 @@ public class MainMenu implements ActionListener {
     public void createWindow()
     {
         this.mainMenu = new JFrame();
-        this.mainMenu.setTitle("USM 98-99 Tweaker v1.1");
+        this.mainMenu.setTitle("USM 98-99 Tweaker v1.2");
         
-        this.mainMenu.setSize(300, 270);
+        this.mainMenu.setSize(270, 220);
         this.mainMenu.setLocation(250, 250);
         this.mainMenu.setResizable(false);
         
@@ -83,12 +82,10 @@ public class MainMenu implements ActionListener {
         this.mainMenu.setIconImage(img.getImage());
         
         Container windowContent = this.mainMenu.getContentPane();
-        windowContent.setLayout(new GridLayout(4,1));
+        windowContent.setLayout(new GridLayout(3,1));
         
         windowContent.add(MainMenu.patchGameButton);
         MainMenu.patchGameButton.addActionListener(this);
-        windowContent.add(MainMenu.editSaveGameButton);
-        MainMenu.editSaveGameButton.addActionListener(this);
         windowContent.add(MainMenu.aboutButton);
         MainMenu.aboutButton.addActionListener(this);
         windowContent.add(MainMenu.quitButton);
@@ -128,19 +125,6 @@ public class MainMenu implements ActionListener {
             }
         }
         
-        // Edit savegame
-        if(ev.getSource() == MainMenu.editSaveGameButton)
-        {
-            SaveGameEditor saveGameEditor = new SaveGameEditor(this.mainMenu);
-            try {
-                saveGameEditor.launch();
-            } catch (Exception ex) {
-                this.showErrorMessage("An error was encountered. This is the log trace: " + ex.getMessage());
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-                this.mainMenu.setEnabled(true);
-            }
-        }
-        
         // About
         if(ev.getSource() == MainMenu.aboutButton)
         {
@@ -172,7 +156,7 @@ public class MainMenu implements ActionListener {
         message += "\nThe source code is available on GitHub, so feel free to contribute.";
         message += "\nAuthor: The USM Community, since 2017.";
         
-        message += "\n\nContributors: Ande PEARSON, Christian SMITH, Dane SMALLBONE, Eric COURTIAL";
+        message += "\n\nContributors: Ande PEARSON, Christian SMITH (Pseudo), Dane SMALLBONE, Florian DEBORTOLI, Eric COURTIAL";
         message += "\nSpecial thanks to the game dev's team for having created the USM series.";
         JOptionPane.showMessageDialog(this.mainMenu, message, "About", 1);
     }
