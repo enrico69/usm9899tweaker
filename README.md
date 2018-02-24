@@ -1,5 +1,5 @@
 # USM 98-99 Tweaker
-A small app to patch your Ultimate Soccer Manager 98-99 and edit savegames
+A small app to patch your Ultimate Soccer Manager 98-99
 
 ## Target
 The target version is the english 2.0 version (98-99). The tweaker has not been tested with other versions of the game.
