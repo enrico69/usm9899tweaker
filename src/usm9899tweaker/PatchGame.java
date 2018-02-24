@@ -40,6 +40,10 @@ public class PatchGame implements ActionListener {
     final private JButton cheatMenuButton = new JButton("");
     final private JButton transfertModeButton = new JButton("");
     final private JButton firingModeButton = new JButton("");
+    final private JTextField maxPromRelegFrQtyValue = new JTextField();
+    final private JButton savemaxPromRelegFrQtyButton = new JButton("Save");
+    final private JTextField maxPromRelegItQtyValue = new JTextField();
+    final private JButton savemaxPromRelegItQtyButton = new JButton("Save");
     
     /* Variables use for processing */
     private boolean firstTime = false;
@@ -112,6 +116,13 @@ public class PatchGame implements ActionListener {
                     throw new Exception("Sorry, but it seems that your file is invalid as there is a difference between the max loan quantity configuration");
                 }
                 
+                // Getting the fr qty of prom/releg team
+                // This we don't make any control of the returned value
+                // because at the end the user can overwrite it easily
+                // So no corruption control
+                int promRelegFr = this.getPromRelelegFr();
+                int promRelegIt = this.getPromRelelegIt();
+                
                 // Getting the starting year
                 int startingYear = this.getStartingYear();
                 
@@ -125,7 +136,7 @@ public class PatchGame implements ActionListener {
                 this.checkIfFiringStandardMode();
                 
                 // Opening the patching panel
-                this.openPanel(lFirstQtyLoanVal[0], startingYear);
+                this.openPanel(lFirstQtyLoanVal[0], startingYear, promRelegFr, promRelegIt);
             }
         } else {
             validFile = false;
@@ -167,13 +178,13 @@ public class PatchGame implements ActionListener {
      * @param maxLoanQty is the max qty of players you can loan
      * @param startingYear is the starting year
      */
-    private void openPanel(int maxLoanQty, int startingYear) {
+    private void openPanel(int maxLoanQty, int startingYear, int promRelegFr, int promRelegIt) {
 
         // Screen definition
         this.patchScreen = new JFrame();
         this.patchScreen.setTitle("Patch game");
-        this.patchScreen.setSize(700, 230);
-        this.patchScreen.setLocation(250, 250);
+        this.patchScreen.setSize(800, 230);
+        this.patchScreen.setLocation(150, 150);
         this.patchScreen.setResizable(false);
         ImageIcon img = new ImageIcon(MainMenu.iconName);
         this.patchScreen.setIconImage(img.getImage());
@@ -309,6 +320,56 @@ public class PatchGame implements ActionListener {
         windowContent.add(this.firingModeButton, c);
         this.firingModeButton.addActionListener((ActionListener) this);
         
+        //--------------------------------
+        // Promoted / Relegated FR qty section
+        //--------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        JLabel promRelegQtyFrLabel = new JLabel("Quantity of promoted and relegated teams in the french league");
+        c.gridx = 0;
+        c.gridy = 6;
+        windowContent.add(promRelegQtyFrLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.maxPromRelegFrQtyValue.setText(String.valueOf(promRelegFr));
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 6;
+        windowContent.add(this.maxPromRelegFrQtyValue, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 6;
+        
+        this.savemaxPromRelegFrQtyButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.savemaxPromRelegFrQtyButton, c);
+        this.savemaxPromRelegFrQtyButton.addActionListener((ActionListener) this);
+        
+        //--------------------------------
+        // Promoted / Relegated IT qty section
+        //--------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        JLabel promRelegQtyItLabel = new JLabel("Quantity of promoted and relegated teams in the italian league");
+        c.gridx = 0;
+        c.gridy = 7;
+        windowContent.add(promRelegQtyItLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.maxPromRelegItQtyValue.setText(String.valueOf(promRelegIt));
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 7;
+        windowContent.add(this.maxPromRelegItQtyValue, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 7;
+        
+        this.savemaxPromRelegItQtyButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.savemaxPromRelegItQtyButton, c);
+        this.savemaxPromRelegItQtyButton.addActionListener((ActionListener) this);
+        
         //-----------------------------------------
         // Display
         //-----------------------------------------
@@ -396,6 +457,36 @@ public class PatchGame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, the year must be in the interval 1792 - 2047");
             }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle the french qty of team promoted and relegated
+        if(ev.getSource() == this.savemaxPromRelegFrQtyButton)
+        {   
+            this.changeFormStatus(false);
+
+            try {
+                this.setFrPromRelegated(Integer.parseInt(this.maxPromRelegFrQtyValue.getText()));
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            this.changeFormStatus(true);
+        }
+        
+        // Handle the italian qty of team promoted and relegated
+        if(ev.getSource() == this.savemaxPromRelegItQtyButton)
+        {   
+            this.changeFormStatus(false);
+
+            try {
+                this.setItPromRelegated(Integer.parseInt(this.maxPromRelegItQtyValue.getText()));
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
             this.changeFormStatus(true);
         }
         
@@ -790,6 +881,56 @@ public class PatchGame implements ActionListener {
             BinaryFileHelper.getInstance().writeIntValue(Values.getTransfertTargetValues().get(currentIndex));
             currentIndex++;
         }
+    }
+    
+    /**
+     * Return the first offset value for the qty of french promoted/regated teams
+     * @return int
+     */
+    private int getPromRelelegFr() throws IOException {
+            byte[] readData = BinaryFileHelper.getInstance().getFilePart(Locations.QTY_PROM_RELEG_FR_1, 1);
+            
+            return readData[0];
+    }
+    
+    /**
+     * Return the first offset value for the qty of french promoted/regated teams
+     * @return int
+     */
+    private int getPromRelelegIt() throws IOException {
+            byte[] readData = BinaryFileHelper.getInstance().getFilePart(Locations.QTY_PROM_RELEG_IT_1, 1);
+            
+            return readData[0];
+    }
+    
+    /**
+     * Change the value of qty of french and relegated teams
+     * @param int value
+     * @throws IOException 
+     */
+    private void setFrPromRelegated(int value) throws IOException {
+        value = value > 9 ? 9:value;
+        value = value < 0 ? 0:value;
+        
+        BinaryFileHelper.getInstance().goToByte(Locations.QTY_PROM_RELEG_FR_1);
+        BinaryFileHelper.getInstance().writeIntValue(value);
+        BinaryFileHelper.getInstance().goToByte(Locations.QTY_PROM_RELEG_FR_2);
+        BinaryFileHelper.getInstance().writeIntValue(value);
+    }
+    
+    /**
+     * Change the value of qty of italian and relegated teams
+     * @param int value
+     * @throws IOException 
+     */
+    private void setItPromRelegated(int value) throws IOException {
+        value = value > 9 ? 9:value;
+        value = value < 0 ? 0:value;
+        
+        BinaryFileHelper.getInstance().goToByte(Locations.QTY_PROM_RELEG_IT_1);
+        BinaryFileHelper.getInstance().writeIntValue(value);
+        BinaryFileHelper.getInstance().goToByte(Locations.QTY_PROM_RELEG_IT_2);
+        BinaryFileHelper.getInstance().writeIntValue(value);
     }
     
     /**
