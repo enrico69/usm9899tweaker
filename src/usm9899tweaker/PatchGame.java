@@ -44,6 +44,8 @@ public class PatchGame implements ActionListener {
     final private JButton savemaxPromRelegFrQtyButton = new JButton("Save");
     final private JTextField maxPromRelegItQtyValue = new JTextField();
     final private JButton savemaxPromRelegItQtyButton = new JButton("Save");
+    final private JButton renameCLButton = new JButton("");
+    final private JButton renameELButton = new JButton("");
     
     /* Variables use for processing */
     private boolean firstTime = false;
@@ -183,7 +185,7 @@ public class PatchGame implements ActionListener {
         // Screen definition
         this.patchScreen = new JFrame();
         this.patchScreen.setTitle("Patch game");
-        this.patchScreen.setSize(800, 230);
+        this.patchScreen.setSize(800, 260);
         this.patchScreen.setLocation(150, 150);
         this.patchScreen.setResizable(false);
         ImageIcon img = new ImageIcon(MainMenu.iconName);
@@ -371,6 +373,44 @@ public class PatchGame implements ActionListener {
         this.savemaxPromRelegItQtyButton.addActionListener((ActionListener) this);
         
         //-----------------------------------------
+        // Rename Champions L
+        //-----------------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 8;
+        JLabel renameChampionsLabel = new JLabel("Rename Champions League");
+        windowContent.add(renameChampionsLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 8;
+        
+        this.renameCLButton.setText("Apply / Re-apply");
+        this.renameCLButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.renameCLButton, c);
+        this.renameCLButton.addActionListener((ActionListener) this);
+        
+        //-----------------------------------------
+        // Rename Europa L
+        //-----------------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 9;
+        JLabel renameEuropaLabel= new JLabel("Rename Europa League");
+        windowContent.add(renameEuropaLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 9;
+        
+        this.renameELButton.setText("Apply / Re-apply");
+        this.renameELButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.renameELButton, c);
+        this.renameELButton.addActionListener((ActionListener) this);
+        
+        //-----------------------------------------
         // Display
         //-----------------------------------------
         this.patchScreen.setVisible(true);
@@ -539,6 +579,32 @@ public class PatchGame implements ActionListener {
                 this.switchFiringMode();
                 this.checkIfFiringStandardMode();
                 this.updateFiringButtonLabel();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle of the activation of the Champions L
+        if(ev.getSource() == this.renameCLButton)
+        {
+            this.changeFormStatus(false);
+            try {
+                this.renameChampionsLeague();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle of the activation of the Europa L
+        if(ev.getSource() == this.renameELButton)
+        {
+            this.changeFormStatus(false);
+            try {
+                this.renameEuropaLeague();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -945,5 +1011,40 @@ public class PatchGame implements ActionListener {
             BinaryFileHelper.getInstance().writeIntValue(Values.getTransfertOriginValues().get(currentIndex));
             currentIndex++;
         }
+    }
+    
+    /**
+     * Rename the European Cup
+     * @throws IOException 
+     */
+    private void renameChampionsLeague() throws IOException {
+        int currentIndex = 0;
+        
+        for (Integer spot : Locations.getChampionsLeaguePositions()) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Champion's L");
+            currentIndex++;
+        }
+        
+         BinaryFileHelper.getInstance().goToByte(Locations.CL_SHORTNAME_SPOT);
+         BinaryFileHelper.getInstance().writeHex("CL");
+         
+    }
+    
+    /**
+     * Rename the UEFA Cup
+     * @throws IOException 
+     */
+    private void renameEuropaLeague() throws IOException {
+        int currentIndex = 0;
+        
+        for (Integer spot : Locations.getEuropaLeaguePositions()) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Europa L");
+            currentIndex++;
+        }
+        
+         BinaryFileHelper.getInstance().goToByte(Locations.EL_SHORTNAME_SPOT);
+         BinaryFileHelper.getInstance().writeHex(" EL ");
     }
 }

@@ -38,6 +38,14 @@ public class Locations {
 
     // Starting year locations
     private static List<Integer> TRANSFERT_MODE;
+    
+    // Champions League spots
+    private static List<Integer> CHAMPIONS_STR;
+    final public static long CL_SHORTNAME_SPOT = 1272432;
+    
+    // Europa League spots
+    private static List<Integer> EUROPA_STR;
+    final public static long EL_SHORTNAME_SPOT = 1272420;
 
     // No firing
     final public static long NO_FIRING = 443419;
@@ -142,5 +150,52 @@ public class Locations {
         }
 
         return Locations.TRANSFERT_MODE;
+    }
+    
+    /**
+     * Return the position of the champions league spots
+     *
+     * @return ArrayList
+     */
+    public static List<Integer> getChampionsLeaguePositions() {
+
+        if (Locations.CHAMPIONS_STR == null) {
+            Locations.CHAMPIONS_STR = new ArrayList<>();
+
+            Locations.CHAMPIONS_STR.add(1106196);
+            Locations.CHAMPIONS_STR.add(1106332);
+            Locations.CHAMPIONS_STR.add(1110736);
+            Locations.CHAMPIONS_STR.add(1239860);
+            Locations.CHAMPIONS_STR.add(1239884);
+            Locations.CHAMPIONS_STR.add(1273136);
+            Locations.CHAMPIONS_STR.add(1289376);
+            Locations.CHAMPIONS_STR.add(1302332);
+            Locations.CHAMPIONS_STR.add(1344625);
+        }
+
+        return Locations.CHAMPIONS_STR;
+    }
+    
+        /**
+     * Return the position of the Europa league spots
+     *
+     * @return ArrayList
+     */
+    public static List<Integer> getEuropaLeaguePositions() {
+
+        if (Locations.EUROPA_STR == null) {
+            Locations.EUROPA_STR = new ArrayList<>();
+
+            Locations.EUROPA_STR.add(1106148);
+            Locations.EUROPA_STR.add(1110808);
+            Locations.EUROPA_STR.add(1225456);
+            Locations.EUROPA_STR.add(1239768);
+            Locations.EUROPA_STR.add(1239788);
+            Locations.EUROPA_STR.add(1273092);
+            Locations.EUROPA_STR.add(1289332);
+            Locations.EUROPA_STR.add(1344601);
+        }
+
+        return Locations.EUROPA_STR;
     }
 }
