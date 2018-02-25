@@ -4,3 +4,4 @@ build.xml
 manifest.mf
 nbproject/
 options.rtfm
+/dist/
