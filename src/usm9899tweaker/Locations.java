@@ -57,6 +57,10 @@ public class Locations {
     // Italian qty of teams promoted / relegated
     final public static long QTY_PROM_RELEG_IT_1 = 1189281;
     final public static long QTY_PROM_RELEG_IT_2 = 1189296;
+    
+    // Serie C1 Location
+    private static List<Integer> SERIE_C1A;
+    private static List<Integer> SERIE_C1B;
 
     /**
      * Return the position of the starting year spots
@@ -198,4 +202,67 @@ public class Locations {
 
         return Locations.EUROPA_STR;
     }
+    
+    /**
+     *Return the spots where to rename serie C1A
+     * 
+     * @return ArrayList
+     */
+    public static List<Integer> getSerieC1ALocations() {
+
+        if (Locations.SERIE_C1A == null) {
+            Locations.SERIE_C1A = new ArrayList<>();
+
+            Locations.SERIE_C1A.add(1139556);
+            Locations.SERIE_C1A.add(1272784);
+            Locations.SERIE_C1A.add(1282306);
+            Locations.SERIE_C1A.add(1282432);
+            Locations.SERIE_C1A.add(1282576);
+            Locations.SERIE_C1A.add(1282712);
+            Locations.SERIE_C1A.add(1282812);
+            Locations.SERIE_C1A.add(1282964);
+            Locations.SERIE_C1A.add(1283119);
+            Locations.SERIE_C1A.add(1283223);
+            Locations.SERIE_C1A.add(1283308);
+            Locations.SERIE_C1A.add(1283400);
+            Locations.SERIE_C1A.add(1283496);
+            Locations.SERIE_C1A.add(1283624);
+            Locations.SERIE_C1A.add(1283648);
+            Locations.SERIE_C1A.add(1283672);
+        }
+
+        return Locations.SERIE_C1A;
+    }
+    
+    /**
+     *Return the spots where to rename serie C1B
+     * 
+     * @return ArrayList
+     */
+    public static List<Integer> getSerieC1BLocations() {
+
+        if (Locations.SERIE_C1B == null) {
+            Locations.SERIE_C1B = new ArrayList<>();
+
+            Locations.SERIE_C1B.add(1139544);
+            Locations.SERIE_C1B.add(1272764);
+            Locations.SERIE_C1B.add(1282274);
+            Locations.SERIE_C1B.add(1282400);
+            Locations.SERIE_C1B.add(1282532);
+            Locations.SERIE_C1B.add(1282684);
+            Locations.SERIE_C1B.add(1282772);
+            Locations.SERIE_C1B.add(1282924);
+            Locations.SERIE_C1B.add(1283091);
+            Locations.SERIE_C1B.add(1283195);
+            Locations.SERIE_C1B.add(1283284);
+            Locations.SERIE_C1B.add(1283380);
+            Locations.SERIE_C1B.add(1283476);
+            Locations.SERIE_C1B.add(1283556);
+            Locations.SERIE_C1B.add(1283580);
+            Locations.SERIE_C1B.add(1283604);
+        }
+
+        return Locations.SERIE_C1B;
+    }
+
 }

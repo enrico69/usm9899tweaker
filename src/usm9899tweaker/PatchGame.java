@@ -46,6 +46,8 @@ public class PatchGame implements ActionListener {
     final private JButton savemaxPromRelegItQtyButton = new JButton("Save");
     final private JButton renameCLButton = new JButton("");
     final private JButton renameELButton = new JButton("");
+    final private JButton renameFRButton = new JButton("");
+    final private JButton renameSPButton = new JButton("");
     
     /* Variables use for processing */
     private boolean firstTime = false;
@@ -185,7 +187,7 @@ public class PatchGame implements ActionListener {
         // Screen definition
         this.patchScreen = new JFrame();
         this.patchScreen.setTitle("Patch game");
-        this.patchScreen.setSize(800, 260);
+        this.patchScreen.setSize(800, 300);
         this.patchScreen.setLocation(150, 150);
         this.patchScreen.setResizable(false);
         ImageIcon img = new ImageIcon(MainMenu.iconName);
@@ -411,6 +413,45 @@ public class PatchGame implements ActionListener {
         this.renameELButton.addActionListener((ActionListener) this);
         
         //-----------------------------------------
+        // Rename French Leagues
+        //-----------------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 10;
+        JLabel renameFrenchLabel= new JLabel("Rename French Leagues");
+        windowContent.add(renameFrenchLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 10;
+        
+        this.renameFRButton.setText("Apply / Re-apply");
+        this.renameFRButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.renameFRButton, c);
+        this.renameFRButton.addActionListener((ActionListener) this);
+        
+        //-----------------------------------------
+        // Rename Spanish Leagues
+        //-----------------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 11;
+        JLabel renameSpanishLabel= new JLabel("Rename Spanish Leagues");
+        windowContent.add(renameSpanishLabel, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 11;
+        
+        this.renameSPButton.setText("Apply / Re-apply");
+        this.renameSPButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.renameSPButton, c);
+        this.renameSPButton.addActionListener((ActionListener) this);
+        
+        
+        //-----------------------------------------
         // Display
         //-----------------------------------------
         this.patchScreen.setVisible(true);
@@ -605,6 +646,34 @@ public class PatchGame implements ActionListener {
             this.changeFormStatus(false);
             try {
                 this.renameEuropaLeague();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle of the renaming of the french league
+        if(ev.getSource() == this.renameFRButton)
+        {
+            this.changeFormStatus(false);
+            try {
+                this.renameLigue1();
+                this.renameLigue2();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle of the renaming of the spanish league
+        if(ev.getSource() == this.renameSPButton)
+        {
+            this.changeFormStatus(false);
+            try {
+                this.renameLiga1();
+                this.renameLiga2();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1018,12 +1087,10 @@ public class PatchGame implements ActionListener {
      * @throws IOException 
      */
     private void renameChampionsLeague() throws IOException {
-        int currentIndex = 0;
-        
+
         for (Integer spot : Locations.getChampionsLeaguePositions()) {
             BinaryFileHelper.getInstance().goToByte(spot);
             BinaryFileHelper.getInstance().writeHex("Champion's L");
-            currentIndex++;
         }
         
          BinaryFileHelper.getInstance().goToByte(Locations.CL_SHORTNAME_SPOT);
@@ -1036,15 +1103,307 @@ public class PatchGame implements ActionListener {
      * @throws IOException 
      */
     private void renameEuropaLeague() throws IOException {
-        int currentIndex = 0;
-        
+
         for (Integer spot : Locations.getEuropaLeaguePositions()) {
             BinaryFileHelper.getInstance().goToByte(spot);
             BinaryFileHelper.getInstance().writeHex("Europa L");
-            currentIndex++;
         }
         
          BinaryFileHelper.getInstance().goToByte(Locations.EL_SHORTNAME_SPOT);
          BinaryFileHelper.getInstance().writeHex(" EL ");
+    }
+    
+    /**
+     * Rename the French Division 1 to Ligue 1
+     * @throws IOException 
+     */
+    private void renameLigue1() throws IOException {
+        
+        for (Integer spot : Locations.getSerieC1ALocations()) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Ligue 1  ");
+        }
+        
+        // Ligues summary
+        BinaryFileHelper.getInstance().goToByte(358278);
+        BinaryFileHelper.getInstance().writeIntValue(100);
+        BinaryFileHelper.getInstance().goToByte(358279);
+        BinaryFileHelper.getInstance().writeIntValue(133);
+        
+        // Current form
+        BinaryFileHelper.getInstance().goToByte(1169336);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1169337);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169338);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top scorer
+        BinaryFileHelper.getInstance().goToByte(1169352);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1169353);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169354);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Tables
+        BinaryFileHelper.getInstance().goToByte(1169184);
+        BinaryFileHelper.getInstance().writeIntValue(88);
+        BinaryFileHelper.getInstance().goToByte(1169185);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        BinaryFileHelper.getInstance().goToByte(1169186);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Tables Home 
+        BinaryFileHelper.getInstance().goToByte(1169188);
+        BinaryFileHelper.getInstance().writeIntValue(64);
+        BinaryFileHelper.getInstance().goToByte(1169189);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        BinaryFileHelper.getInstance().goToByte(1169190);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Tables Away 
+        BinaryFileHelper.getInstance().goToByte(1169192);
+        BinaryFileHelper.getInstance().writeIntValue(40);
+        BinaryFileHelper.getInstance().goToByte(1169193);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        BinaryFileHelper.getInstance().goToByte(1169194);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Fixtures
+        BinaryFileHelper.getInstance().goToByte(1169272);
+        BinaryFileHelper.getInstance().writeIntValue(168);
+        BinaryFileHelper.getInstance().goToByte(1169273);
+        BinaryFileHelper.getInstance().writeIntValue(183);
+        BinaryFileHelper.getInstance().goToByte(1169274);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Results
+        BinaryFileHelper.getInstance().goToByte(1169320);
+        BinaryFileHelper.getInstance().writeIntValue(72);
+        BinaryFileHelper.getInstance().goToByte(1169321);
+        BinaryFileHelper.getInstance().writeIntValue(183);
+        BinaryFileHelper.getInstance().goToByte(1169322);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top scorers 
+        BinaryFileHelper.getInstance().goToByte(1169352);
+        BinaryFileHelper.getInstance().writeIntValue(136);
+        BinaryFileHelper.getInstance().goToByte(1169353);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169354);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top players
+        BinaryFileHelper.getInstance().goToByte(1169368);
+        BinaryFileHelper.getInstance().writeIntValue(32);
+        BinaryFileHelper.getInstance().goToByte(1169369);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169370);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top managers of the month 
+        BinaryFileHelper.getInstance().goToByte(1169384);
+        BinaryFileHelper.getInstance().writeIntValue(148);
+        BinaryFileHelper.getInstance().goToByte(1169385);
+        BinaryFileHelper.getInstance().writeIntValue(181);
+        BinaryFileHelper.getInstance().goToByte(1169386);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top managers of the year
+        BinaryFileHelper.getInstance().goToByte(1169400);
+        BinaryFileHelper.getInstance().writeIntValue(252);
+        BinaryFileHelper.getInstance().goToByte(1169401);
+        BinaryFileHelper.getInstance().writeIntValue(180);
+        BinaryFileHelper.getInstance().goToByte(1169402);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Most assist 
+        BinaryFileHelper.getInstance().goToByte(1169416);
+        BinaryFileHelper.getInstance().writeIntValue(136);
+        BinaryFileHelper.getInstance().goToByte(1169417);
+        BinaryFileHelper.getInstance().writeIntValue(180);
+        BinaryFileHelper.getInstance().goToByte(1169418);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Man of the match
+        BinaryFileHelper.getInstance().goToByte(1169432);
+        BinaryFileHelper.getInstance().writeIntValue(240);
+        BinaryFileHelper.getInstance().goToByte(1169433);
+        BinaryFileHelper.getInstance().writeIntValue(179);
+        BinaryFileHelper.getInstance().goToByte(1169434);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Worst discipline
+        BinaryFileHelper.getInstance().goToByte(1169448);
+        BinaryFileHelper.getInstance().writeIntValue(108);
+        BinaryFileHelper.getInstance().goToByte(1169449);
+        BinaryFileHelper.getInstance().writeIntValue(179);
+        BinaryFileHelper.getInstance().goToByte(1169450);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Average Attendance
+        BinaryFileHelper.getInstance().goToByte(1169464);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1169465);
+        BinaryFileHelper.getInstance().writeIntValue(178);
+        BinaryFileHelper.getInstance().goToByte(1169466);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+    }
+    
+    /**
+     * Rename the French Division 2 to Ligue 2
+     * @throws IOException 
+     */
+    private void renameLigue2() throws IOException {
+        
+        for (Integer spot : Locations.getSerieC1BLocations()) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Ligue 2  ");
+        }
+        
+        // Ligues summary
+        BinaryFileHelper.getInstance().goToByte(358301);
+        BinaryFileHelper.getInstance().writeIntValue(88);
+        BinaryFileHelper.getInstance().goToByte(358302);
+        BinaryFileHelper.getInstance().writeIntValue(133);
+        
+        // Current form
+        BinaryFileHelper.getInstance().goToByte(1169340);
+        BinaryFileHelper.getInstance().writeIntValue(212);
+        BinaryFileHelper.getInstance().goToByte(1169341);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169342);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Top scorer
+        BinaryFileHelper.getInstance().goToByte(1169356);
+        BinaryFileHelper.getInstance().writeIntValue(108);
+        BinaryFileHelper.getInstance().goToByte(1169357);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169358);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Tables
+        BinaryFileHelper.getInstance().goToByte(1169196);
+        BinaryFileHelper.getInstance().writeIntValue(20);
+        BinaryFileHelper.getInstance().goToByte(1169185);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        BinaryFileHelper.getInstance().goToByte(1169186);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Tables Home
+        BinaryFileHelper.getInstance().goToByte(1169200);
+        BinaryFileHelper.getInstance().writeIntValue(252);
+        BinaryFileHelper.getInstance().goToByte(1169201);
+        BinaryFileHelper.getInstance().writeIntValue(183);
+        BinaryFileHelper.getInstance().goToByte(1169202);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Tables Away
+        BinaryFileHelper.getInstance().goToByte(1169204);
+        BinaryFileHelper.getInstance().writeIntValue(228);
+        BinaryFileHelper.getInstance().goToByte(1169205);
+        BinaryFileHelper.getInstance().writeIntValue(183);
+        BinaryFileHelper.getInstance().goToByte(1169206);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Fixtures
+        BinaryFileHelper.getInstance().goToByte(1169276);
+        BinaryFileHelper.getInstance().writeIntValue(148);
+        BinaryFileHelper.getInstance().goToByte(1169277);
+        BinaryFileHelper.getInstance().writeIntValue(183);
+        BinaryFileHelper.getInstance().goToByte(1169278);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Results
+        BinaryFileHelper.getInstance().goToByte(1169324);
+        BinaryFileHelper.getInstance().writeIntValue(52);
+        BinaryFileHelper.getInstance().goToByte(1169325);
+        BinaryFileHelper.getInstance().writeIntValue(183);
+        BinaryFileHelper.getInstance().goToByte(1169326);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top scorers 
+        BinaryFileHelper.getInstance().goToByte(1169356);
+        BinaryFileHelper.getInstance().writeIntValue(108);
+        BinaryFileHelper.getInstance().goToByte(1169357);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169358);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top players 
+        BinaryFileHelper.getInstance().goToByte(1169372);
+        BinaryFileHelper.getInstance().writeIntValue(4);
+        BinaryFileHelper.getInstance().goToByte(1169373);
+        BinaryFileHelper.getInstance().writeIntValue(182);
+        BinaryFileHelper.getInstance().goToByte(1169374);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Top managers of the month 
+        BinaryFileHelper.getInstance().goToByte(1169388);
+        BinaryFileHelper.getInstance().writeIntValue(108);
+        BinaryFileHelper.getInstance().goToByte(1169389);
+        BinaryFileHelper.getInstance().writeIntValue(181);
+        BinaryFileHelper.getInstance().goToByte(1169390);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Top managers of the year
+        BinaryFileHelper.getInstance().goToByte(1169404);
+        BinaryFileHelper.getInstance().writeIntValue(212);
+        BinaryFileHelper.getInstance().goToByte(1169405);
+        BinaryFileHelper.getInstance().writeIntValue(180);
+        BinaryFileHelper.getInstance().goToByte(1169406);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Most assist
+        BinaryFileHelper.getInstance().goToByte(1169420);
+        BinaryFileHelper.getInstance().writeIntValue(108);
+        BinaryFileHelper.getInstance().goToByte(1169421);
+        BinaryFileHelper.getInstance().writeIntValue(180);
+        BinaryFileHelper.getInstance().goToByte(1169422);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Man of the match
+        BinaryFileHelper.getInstance().goToByte(1169436);
+        BinaryFileHelper.getInstance().writeIntValue(196);
+        BinaryFileHelper.getInstance().goToByte(1169437);
+        BinaryFileHelper.getInstance().writeIntValue(179);
+        BinaryFileHelper.getInstance().goToByte(1169438);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Worst discipline
+        BinaryFileHelper.getInstance().goToByte(1169452);
+        BinaryFileHelper.getInstance().writeIntValue(76);
+        BinaryFileHelper.getInstance().goToByte(1169453);
+        BinaryFileHelper.getInstance().writeIntValue(179);
+        BinaryFileHelper.getInstance().goToByte(1169454);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Average Attendance
+        BinaryFileHelper.getInstance().goToByte(1169468);
+        BinaryFileHelper.getInstance().writeIntValue(204);
+        BinaryFileHelper.getInstance().goToByte(1169469);
+        BinaryFileHelper.getInstance().writeIntValue(178);
+        BinaryFileHelper.getInstance().goToByte(1169470);
+        BinaryFileHelper.getInstance().writeIntValue(83);
+    }
+    
+    /**
+     * Rename the Spanish Division 1 to La Liga1
+     * @throws IOException 
+     */
+    private void renameLiga1() throws IOException {
+        
+
+    }
+    
+    /**
+     * Rename the French Division 2 to La Liga1
+     * @throws IOException 
+     */
+    private void renameLiga2() throws IOException {
+        
+
     }
 }
