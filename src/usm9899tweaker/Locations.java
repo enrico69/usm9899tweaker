@@ -64,6 +64,9 @@ public class Locations {
     
     // Spanish Division 2A Locations
     private static List<Integer> DIV2A;
+    
+    // French Nationale Locations
+    private static List<Integer> NATIONAL;
 
     /**
      * Return the position of the starting year spots
@@ -303,5 +306,35 @@ public class Locations {
         }
 
         return Locations.DIV2A;
+    }
+    
+    /**
+     *Return the spots where to rename Division 2A
+     * 
+     * @return ArrayList
+     */
+    public static List<Integer> getNationalLocations() {
+
+        if (Locations.NATIONAL == null) {
+            Locations.NATIONAL = new ArrayList<>();
+
+            Locations.NATIONAL.add(1106268);
+            Locations.NATIONAL.add(1106356);
+            Locations.NATIONAL.add(1106380);
+            Locations.NATIONAL.add(1106404);
+            Locations.NATIONAL.add(1168418);
+            Locations.NATIONAL.add(1168484);
+            Locations.NATIONAL.add(1168560);
+            Locations.NATIONAL.add(1168632);
+            Locations.NATIONAL.add(1168672);
+            Locations.NATIONAL.add(1168752);
+            Locations.NATIONAL.add(1168847);
+            Locations.NATIONAL.add(1168903);
+            Locations.NATIONAL.add(1168944);
+            Locations.NATIONAL.add(1168992);
+            Locations.NATIONAL.add(1273072);
+        }
+
+        return Locations.NATIONAL;
     }
 }
