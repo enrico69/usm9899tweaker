@@ -61,6 +61,9 @@ public class Locations {
     // Serie C1 Location
     private static List<Integer> SERIE_C1A;
     private static List<Integer> SERIE_C1B;
+    
+    // Spanish Division 2A Locations
+    private static List<Integer> DIV2A;
 
     /**
      * Return the position of the starting year spots
@@ -265,4 +268,40 @@ public class Locations {
         return Locations.SERIE_C1B;
     }
 
+     /**
+     *Return the spots where to rename Division 2A
+     * 
+     * @return ArrayList
+     */
+    public static List<Integer> getDiv2ALocations() {
+
+        if (Locations.DIV2A == null) {
+            Locations.DIV2A = new ArrayList<>();
+
+            Locations.DIV2A.add(1105526);
+            Locations.DIV2A.add(1105596);
+            Locations.DIV2A.add(1105672);
+            Locations.DIV2A.add(1105744);
+            Locations.DIV2A.add(1105784);
+            Locations.DIV2A.add(1105864);
+            Locations.DIV2A.add(1105959);
+            Locations.DIV2A.add(1106015);
+            Locations.DIV2A.add(1106056);
+            Locations.DIV2A.add(1106108);
+            Locations.DIV2A.add(1106288);
+            Locations.DIV2A.add(1106452);
+            Locations.DIV2A.add(1106424);
+            Locations.DIV2A.add(1106452);
+            Locations.DIV2A.add(1106480);
+            Locations.DIV2A.add(1110752);
+            Locations.DIV2A.add(1242472);
+            Locations.DIV2A.add(1242536); 
+            Locations.DIV2A.add(1242564); 
+            Locations.DIV2A.add(1242642); 
+            Locations.DIV2A.add(1242656); 
+            Locations.DIV2A.add(1258124); 
+        }
+
+        return Locations.DIV2A;
+    }
 }

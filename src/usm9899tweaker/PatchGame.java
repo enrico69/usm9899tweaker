@@ -1129,7 +1129,7 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(100);
         BinaryFileHelper.getInstance().goToByte(358279);
         BinaryFileHelper.getInstance().writeIntValue(133);
-        
+
         // Current form
         BinaryFileHelper.getInstance().goToByte(1169336);
         BinaryFileHelper.getInstance().writeIntValue(236);
@@ -1287,9 +1287,9 @@ public class PatchGame implements ActionListener {
         // Tables
         BinaryFileHelper.getInstance().goToByte(1169196);
         BinaryFileHelper.getInstance().writeIntValue(20);
-        BinaryFileHelper.getInstance().goToByte(1169185);
+        BinaryFileHelper.getInstance().goToByte(1169197);
         BinaryFileHelper.getInstance().writeIntValue(184);
-        BinaryFileHelper.getInstance().goToByte(1169186);
+        BinaryFileHelper.getInstance().goToByte(1169198);
         BinaryFileHelper.getInstance().writeIntValue(83);
         
         // Tables Home
@@ -1399,11 +1399,13 @@ public class PatchGame implements ActionListener {
     }
     
     /**
-     * Rename the French Division 2 to La Liga1
+     * Rename the Spanish Division 2 to La Liga1
      * @throws IOException 
      */
     private void renameLiga2() throws IOException {
-        
-
+        for (Integer spot : Locations.getDiv2ALocations()) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("La Liga 2  ");
+        }
     }
 }
