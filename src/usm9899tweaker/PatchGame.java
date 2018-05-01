@@ -653,6 +653,7 @@ public class PatchGame implements ActionListener {
             try {
                 this.renameLigue1();
                 this.renameLigue2();
+                this.renameFrEsShortNames();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -666,6 +667,7 @@ public class PatchGame implements ActionListener {
             try {
                 this.renameLiga1();
                 this.renameLiga2();
+                this.renameFrEsShortNames();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1157,7 +1159,7 @@ public class PatchGame implements ActionListener {
         
         // Ligues summary
         int[] factorial = {358278, 361280, 364714, 367686, 368070, 368454,
-        368838, 369222, 369606, 370698, 371098, 371498};
+        368838, 369222, 369606, 370698, 371098, 371498, 1142376, 1142384, 1256056};
 
         for (Integer spot : factorial) {
             BinaryFileHelper.getInstance().goToByte(spot);
@@ -1286,6 +1288,53 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(178);
         BinaryFileHelper.getInstance().goToByte(1169466);
         BinaryFileHelper.getInstance().writeIntValue(83);
+        
+         // Short name
+        BinaryFileHelper.getInstance().goToByte(1273704);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1273705);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        
+        BinaryFileHelper.getInstance().goToByte(1345488);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1345489);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        
+        // History
+        BinaryFileHelper.getInstance().goToByte(1273352);
+        BinaryFileHelper.getInstance().writeIntValue(208);
+        BinaryFileHelper.getInstance().goToByte(1273353);
+        BinaryFileHelper.getInstance().writeIntValue(141);
+    }
+    
+    /**
+     * Rename the short name of the French and Spanish leagues
+     */
+    private void renameFrEsShortNames() throws IOException
+    {
+        int L1Start = 1283820;
+        BinaryFileHelper.getInstance().goToByte(L1Start);
+        BinaryFileHelper.getInstance().writeHex("L1");
+        
+        int L1End = L1Start + 28; // 26 empty chars
+        int L1EndString = L1Start + 2;
+        BinaryFileHelper.getInstance().goToByte(L1EndString);
+        for (int i = L1EndString; i<=L1End; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        
+       
+        int L2Start = 1283852;
+        BinaryFileHelper.getInstance().goToByte(L2Start);
+        BinaryFileHelper.getInstance().writeHex("L2");
+        
+        int L2End = L2Start + 28; // 26 empty chars
+        int L2EndString = L2Start + 2;
+        BinaryFileHelper.getInstance().goToByte(L2EndString);
+        for (int i = L2EndString; i<=L2End; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        
     }
 
     /**
@@ -1302,7 +1351,7 @@ public class PatchGame implements ActionListener {
 
         // Ligues summary
         int[] factorial = {358301, 361303, 364737, 367709, 368093, 368477,
-        368861, 369245, 369629, 370721, 371121, 371521};
+        368861, 369245, 369629, 370721, 371121, 371521, 1142380, 1142388, 1256061};
 
         for (Integer spot : factorial) {
             BinaryFileHelper.getInstance().goToByte(spot);
@@ -1431,6 +1480,28 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(178);
         BinaryFileHelper.getInstance().goToByte(1169470);
         BinaryFileHelper.getInstance().writeIntValue(83);
+        
+        // Short name
+        BinaryFileHelper.getInstance().goToByte(1273708);
+        BinaryFileHelper.getInstance().writeIntValue(12);
+        BinaryFileHelper.getInstance().goToByte(1273709);
+        BinaryFileHelper.getInstance().writeIntValue(185);
+        
+        BinaryFileHelper.getInstance().goToByte(1345492);
+        BinaryFileHelper.getInstance().writeIntValue(12);
+        BinaryFileHelper.getInstance().goToByte(1345493);
+        BinaryFileHelper.getInstance().writeIntValue(185);
+        
+        BinaryFileHelper.getInstance().goToByte(1345492);
+        BinaryFileHelper.getInstance().writeIntValue(12);
+        BinaryFileHelper.getInstance().goToByte(1345493);
+        BinaryFileHelper.getInstance().writeIntValue(185);
+        
+        // History
+        BinaryFileHelper.getInstance().goToByte(1273356);
+        BinaryFileHelper.getInstance().writeIntValue(188);
+        BinaryFileHelper.getInstance().goToByte(1273357);
+        BinaryFileHelper.getInstance().writeIntValue(141);
     }
 
     /**
@@ -1452,7 +1523,7 @@ public class PatchGame implements ActionListener {
 
         // Ligues summary
         int[] factorial = {1110, 4093, 7818, 11430, 11814, 12198, 12582,
-            12966, 13350, 13754, 14154, 14554};
+            12966, 13350, 13754, 14154, 14554, 1142624, 1142632};
 
         for (Integer spot : factorial) {
             BinaryFileHelper.getInstance().goToByte(spot);
@@ -1464,7 +1535,28 @@ public class PatchGame implements ActionListener {
             BinaryFileHelper.getInstance().goToByte(spot);
             BinaryFileHelper.getInstance().writeIntValue(83);
         }
-
+        
+        // Short name
+        BinaryFileHelper.getInstance().goToByte(1283820);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1283820);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        
+        BinaryFileHelper.getInstance().goToByte(1274776);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1274777);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        
+        BinaryFileHelper.getInstance().goToByte(1347440);
+        BinaryFileHelper.getInstance().writeIntValue(236);
+        BinaryFileHelper.getInstance().goToByte(1347441);
+        BinaryFileHelper.getInstance().writeIntValue(184);
+        
+        // History
+        BinaryFileHelper.getInstance().goToByte(1274736);
+        BinaryFileHelper.getInstance().writeIntValue(240);
+        BinaryFileHelper.getInstance().goToByte(1274737);
+        BinaryFileHelper.getInstance().writeIntValue(142);
     }
 
     /**
@@ -1477,5 +1569,16 @@ public class PatchGame implements ActionListener {
             BinaryFileHelper.getInstance().goToByte(spot);
             BinaryFileHelper.getInstance().writeHex("La Liga 2  ");
         }
+        
+        // Short name
+        BinaryFileHelper.getInstance().goToByte(1274780);
+        BinaryFileHelper.getInstance().writeIntValue(12);
+        BinaryFileHelper.getInstance().goToByte(1274781);
+        BinaryFileHelper.getInstance().writeIntValue(185);
+        
+        BinaryFileHelper.getInstance().goToByte(1347444);
+        BinaryFileHelper.getInstance().writeIntValue(12);
+        BinaryFileHelper.getInstance().goToByte(1347445);
+        BinaryFileHelper.getInstance().writeIntValue(185);
     }
 }
