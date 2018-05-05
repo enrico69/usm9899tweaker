@@ -1330,7 +1330,7 @@ public class PatchGame implements ActionListener {
             BinaryFileHelper.getInstance().writeIntValue(0);
         }
          
-         begin = 1283932;
+         begin = 1283948;
          BinaryFileHelper.getInstance().goToByte(begin);
          end = begin + 13;
          BinaryFileHelper.getInstance().writeHex("Prom. from L2");
@@ -1589,6 +1589,41 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(240);
         BinaryFileHelper.getInstance().goToByte(1274737);
         BinaryFileHelper.getInstance().writeIntValue(142);
+        
+        //Results
+        BinaryFileHelper.getInstance().goToByte(1106712);
+        BinaryFileHelper.getInstance().writeIntValue(96);
+        BinaryFileHelper.getInstance().writeIntValue(248);
+        
+        //Current form
+        BinaryFileHelper.getInstance().goToByte(1106720);
+        BinaryFileHelper.getInstance().writeIntValue(48);
+        BinaryFileHelper.getInstance().writeIntValue(248);
+        
+        //Top scorer
+        BinaryFileHelper.getInstance().goToByte(1106728);
+        BinaryFileHelper.getInstance().writeIntValue(248);
+        BinaryFileHelper.getInstance().writeIntValue(247);
+        
+         //Top players
+        BinaryFileHelper.getInstance().goToByte(1106736);
+        BinaryFileHelper.getInstance().writeIntValue(192);
+        BinaryFileHelper.getInstance().writeIntValue(247);
+        
+        //Manager of the month
+        BinaryFileHelper.getInstance().goToByte(1106744);
+        BinaryFileHelper.getInstance().writeIntValue(112);
+        BinaryFileHelper.getInstance().writeIntValue(247);
+        
+        //Manager of the year
+        BinaryFileHelper.getInstance().goToByte(1106752);
+        BinaryFileHelper.getInstance().writeIntValue(32);
+        BinaryFileHelper.getInstance().writeIntValue(247);
+        
+        //Most assists
+        BinaryFileHelper.getInstance().goToByte(1106760);
+        BinaryFileHelper.getInstance().writeIntValue(232);
+        BinaryFileHelper.getInstance().writeIntValue(246);
     }
 
     /**
