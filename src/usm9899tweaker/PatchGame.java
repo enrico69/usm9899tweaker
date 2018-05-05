@@ -1552,6 +1552,10 @@ public class PatchGame implements ActionListener {
         // Use the C1A Final slot to add the missing slot
         BinaryFileHelper.getInstance().goToByte(1283932);
         BinaryFileHelper.getInstance().writeHex(ligaName + "      ");
+        
+        // Data Menu
+        BinaryFileHelper.getInstance().goToByte(1110764);
+        BinaryFileHelper.getInstance().writeHex(ligaName + "      ");
 
         // Ligues summary
         int[] factorial = {1110, 4093, 7818, 11430, 11814, 12198, 12582,
@@ -1624,10 +1628,47 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().goToByte(1106760);
         BinaryFileHelper.getInstance().writeIntValue(232);
         BinaryFileHelper.getInstance().writeIntValue(246);
+        
+        //Man of the match
+        BinaryFileHelper.getInstance().goToByte(1106768);
+        BinaryFileHelper.getInstance().writeIntValue(144);
+        BinaryFileHelper.getInstance().writeIntValue(246);
+        
+        //Worst discipline
+        BinaryFileHelper.getInstance().goToByte(1106776);
+        BinaryFileHelper.getInstance().writeIntValue(80);
+        BinaryFileHelper.getInstance().writeIntValue(246);
+        
+        //Average attendance (Buggy in the original game)
+//        BinaryFileHelper.getInstance().goToByte(1106784);
+//        BinaryFileHelper.getInstance().writeIntValue(12);
+//        BinaryFileHelper.getInstance().writeIntValue(246);
+
+        //Fixtures
+        BinaryFileHelper.getInstance().goToByte(1106664);
+        BinaryFileHelper.getInstance().writeIntValue(92);
+        BinaryFileHelper.getInstance().writeIntValue(3);
+        
+        // Data menu
+        
+        // Table
+        BinaryFileHelper.getInstance().goToByte(1106576);
+        BinaryFileHelper.getInstance().writeIntValue(228);
+        BinaryFileHelper.getInstance().writeIntValue(3);
+        
+        // Tables - Away
+        BinaryFileHelper.getInstance().goToByte(1106580);
+        BinaryFileHelper.getInstance().writeIntValue(204);
+        BinaryFileHelper.getInstance().writeIntValue(3);        
+        
+        // Table-Home
+        BinaryFileHelper.getInstance().goToByte(1106584);
+        BinaryFileHelper.getInstance().writeIntValue(180);
+        BinaryFileHelper.getInstance().writeIntValue(3);
     }
 
     /**
-     * Rename the Spanish Division 2 to La Liga1
+     * Rename the Spanish Division 2 to La Liga2
      *
      * @throws IOException
      */
