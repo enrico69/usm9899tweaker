@@ -654,6 +654,7 @@ public class PatchGame implements ActionListener {
                 this.renameLigue1();
                 this.renameLigue2();
                 this.renameFrEsShortNames();
+                this.renameEndOfSeason();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -668,6 +669,7 @@ public class PatchGame implements ActionListener {
                 this.renameLiga1();
                 this.renameLiga2();
                 this.renameFrEsShortNames();
+                this.renameEndOfSeason();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1306,6 +1308,36 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().goToByte(1273353);
         BinaryFileHelper.getInstance().writeIntValue(141);
     }
+    
+    /**
+     * Rename the string from the end of the season
+     */
+    private void renameEndOfSeason() throws IOException
+    {
+        int begin = 1283884;
+         BinaryFileHelper.getInstance().goToByte(begin);
+         int end = begin + 12;
+         BinaryFileHelper.getInstance().writeHex("Rel. from L1");
+         for (int i = end; i<=end +3; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+         
+         begin = 1283900;
+         BinaryFileHelper.getInstance().goToByte(begin);
+         end = begin + 12;
+         BinaryFileHelper.getInstance().writeHex("L2 Champions");
+         for (int i = end; i<=end +16; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+         
+         begin = 1283932;
+         BinaryFileHelper.getInstance().goToByte(begin);
+         end = begin + 13;
+         BinaryFileHelper.getInstance().writeHex("Prom. from L2");
+         for (int i = end; i<=end +30; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+    }        
     
     /**
      * Rename the short name of the French and Spanish leagues
