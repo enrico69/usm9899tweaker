@@ -1683,7 +1683,97 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(185);
     }
     
-    private void renameVarious() {
+    /**
+     * Rename various strings
+     */
+    private void renameVarious() throws IOException {
         
+        // STD
+        BinaryFileHelper.getInstance().goToByte(1175920);
+        BinaryFileHelper.getInstance().writeHex("STD");
+        for (int i = 0; i<=5; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        
+        BinaryFileHelper.getInstance().goToByte(1176358);
+        BinaryFileHelper.getInstance().writeHex("STD");
+        for (int i = 0; i<=5; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        
+        // Alan Agent
+        BinaryFileHelper.getInstance().goToByte(1368368);
+        BinaryFileHelper.getInstance().writeHex("Mino Raiola");
+        
+        // Sierratext
+        int[] factorial = {1112340, 1112364, 1112396, 1141152};
+        
+         for (Integer spot : factorial) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Smart TV");
+             for (int i = 0; i<=2; i++) {
+                BinaryFileHelper.getInstance().writeIntValue(0);
+            }
+         }
+         
+        BinaryFileHelper.getInstance().goToByte(1255052);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (Dutch)");
+        for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        BinaryFileHelper.getInstance().goToByte(1255072);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (Spain)");
+        for (int i = 0; i<=4; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        BinaryFileHelper.getInstance().goToByte(1255096);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (Scottish)");
+        for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        BinaryFileHelper.getInstance().goToByte(1255120);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (Italian)");
+        for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        BinaryFileHelper.getInstance().goToByte(1255144);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (German)");
+        for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        BinaryFileHelper.getInstance().goToByte(1255164);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (French)");
+        for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        BinaryFileHelper.getInstance().goToByte(1255184);
+        BinaryFileHelper.getInstance().writeHex("Smart TV (English)");
+        for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+        
+         // Email
+        BinaryFileHelper.getInstance().goToByte(1141176);
+        BinaryFileHelper.getInstance().writeHex("Macbook");
+         for (int i = 0; i<=2; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+         
+         // Cell phone
+        BinaryFileHelper.getInstance().goToByte(1141136);
+        BinaryFileHelper.getInstance().writeHex("iPhone");
+         for (int i = 0; i<=6; i++) {
+            BinaryFileHelper.getInstance().writeIntValue(0);
+        }
+         
+        BinaryFileHelper.getInstance().goToByte(1228256);
+        BinaryFileHelper.getInstance().writeHex("iPhone");
+        
+        // Video highlights
+        BinaryFileHelper.getInstance().goToByte(1140632);
+        BinaryFileHelper.getInstance().writeHex("Apple TV");
+        for (int i = 0; i<=7; i++) {
+        BinaryFileHelper.getInstance().writeIntValue(0);
+        }
     }
 }
