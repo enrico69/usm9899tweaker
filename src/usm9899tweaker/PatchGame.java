@@ -46,8 +46,8 @@ public class PatchGame implements ActionListener {
     final private JButton savemaxPromRelegItQtyButton = new JButton("Save");
     final private JButton renameCLButton = new JButton("");
     final private JButton renameELButton = new JButton("");
-    final private JButton renameFRButton = new JButton("");
-    final private JButton renameSPButton = new JButton("");
+    final private JButton renameLeagueButton = new JButton("");
+    final private JButton renameVariousButton = new JButton("");
 
     /* Variables use for processing */
     private boolean firstTime = false;
@@ -418,42 +418,42 @@ public class PatchGame implements ActionListener {
         this.renameELButton.addActionListener((ActionListener) this);
 
         //-----------------------------------------
-        // Rename French Leagues
+        // Rename Leagues
         //-----------------------------------------
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 10;
-        JLabel renameFrenchLabel = new JLabel("Rename French Leagues");
-        windowContent.add(renameFrenchLabel, c);
+        JLabel renameLeagueLabel = new JLabel("Rename Leagues (See doc.)");
+        windowContent.add(renameLeagueLabel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 10;
 
-        this.renameFRButton.setText("Apply / Re-apply");
-        this.renameFRButton.setPreferredSize(new Dimension(120, 20));
-        windowContent.add(this.renameFRButton, c);
-        this.renameFRButton.addActionListener((ActionListener) this);
+        this.renameLeagueButton.setText("Apply / Re-apply");
+        this.renameLeagueButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.renameLeagueButton, c);
+        this.renameLeagueButton.addActionListener((ActionListener) this);
 
         //-----------------------------------------
-        // Rename Spanish Leagues
+        // Rename various strings
         //-----------------------------------------
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 11;
-        JLabel renameSpanishLabel = new JLabel("Rename Spanish Leagues");
-        windowContent.add(renameSpanishLabel, c);
+        JLabel renameVariousLabel = new JLabel("Rename various strings (See doc.)");
+        windowContent.add(renameVariousLabel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 11;
 
-        this.renameSPButton.setText("Apply / Re-apply");
-        this.renameSPButton.setPreferredSize(new Dimension(120, 20));
-        windowContent.add(this.renameSPButton, c);
-        this.renameSPButton.addActionListener((ActionListener) this);
+        this.renameVariousButton.setText("Apply / Re-apply");
+        this.renameVariousButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.renameVariousButton, c);
+        this.renameVariousButton.addActionListener((ActionListener) this);
 
         //-----------------------------------------
         // Display
@@ -648,11 +648,13 @@ public class PatchGame implements ActionListener {
         }
 
         // Handle of the renaming of the french league
-        if (ev.getSource() == this.renameFRButton) {
+        if (ev.getSource() == this.renameLeagueButton) {
             this.changeFormStatus(false);
             try {
                 this.renameLigue1();
                 this.renameLigue2();
+                this.renameLiga1();
+                this.renameLiga2();
                 this.renameFrEsShortNames();
                 this.renameEndOfSeason();
             } catch (IOException ex) {
@@ -662,14 +664,11 @@ public class PatchGame implements ActionListener {
             this.changeFormStatus(true);
         }
 
-        // Handle of the renaming of the spanish league
-        if (ev.getSource() == this.renameSPButton) {
+        // Rename various string
+        if (ev.getSource() == this.renameVariousButton) {
             this.changeFormStatus(false);
             try {
-                this.renameLiga1();
-                this.renameLiga2();
-                this.renameFrEsShortNames();
-                this.renameEndOfSeason();
+                this.renameVarious();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1552,14 +1551,10 @@ public class PatchGame implements ActionListener {
         // Use the C1A Final slot to add the missing slot
         BinaryFileHelper.getInstance().goToByte(1283932);
         BinaryFileHelper.getInstance().writeHex(ligaName + "      ");
-        
-        // Data Menu
-        BinaryFileHelper.getInstance().goToByte(1110764);
-        BinaryFileHelper.getInstance().writeHex(ligaName + "      ");
 
         // Ligues summary
         int[] factorial = {1110, 4093, 7818, 11430, 11814, 12198, 12582,
-            12966, 13350, 13754, 14154, 14554, 1142624, 1142632};
+            12966, 13350, 13754, 14154, 14554, 1142624, 1142632, 1256160};
 
         for (Integer spot : factorial) {
             BinaryFileHelper.getInstance().goToByte(spot);
@@ -1649,8 +1644,6 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(92);
         BinaryFileHelper.getInstance().writeIntValue(3);
         
-        // Data menu
-        
         // Table
         BinaryFileHelper.getInstance().goToByte(1106576);
         BinaryFileHelper.getInstance().writeIntValue(228);
@@ -1688,5 +1681,9 @@ public class PatchGame implements ActionListener {
         BinaryFileHelper.getInstance().writeIntValue(12);
         BinaryFileHelper.getInstance().goToByte(1347445);
         BinaryFileHelper.getInstance().writeIntValue(185);
+    }
+    
+    private void renameVarious() {
+        
     }
 }
