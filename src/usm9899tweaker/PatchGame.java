@@ -657,6 +657,7 @@ public class PatchGame implements ActionListener {
                 this.renameLiga2();
                 this.renameFrEsShortNames();
                 this.renameEndOfSeason();
+                this.renameEnglishScotish();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1321,21 +1322,63 @@ public class PatchGame implements ActionListener {
             BinaryFileHelper.getInstance().writeIntValue(0);
         }
          
-         begin = 1283900;
-         BinaryFileHelper.getInstance().goToByte(begin);
-         end = begin + 12;
-         BinaryFileHelper.getInstance().writeHex("L2 Champions");
-         for (int i = end; i<=end +16; i++) {
-            BinaryFileHelper.getInstance().writeIntValue(0);
+         int[] factorial = {1242642, 1242656, 1242564, 1242536, 1105784};
+
+        for (Integer spot : factorial) {
+            begin = spot;
+            BinaryFileHelper.getInstance().goToByte(begin);
+            end = begin + 2;
+            BinaryFileHelper.getInstance().writeHex("L2");
+            for (int i = end; i<=end +9; i++) {
+               BinaryFileHelper.getInstance().writeHex(" ");
+           }
         }
-         
-         begin = 1283948;
-         BinaryFileHelper.getInstance().goToByte(begin);
-         end = begin + 13;
-         BinaryFileHelper.getInstance().writeHex("Prom. from L2");
-         for (int i = end; i<=end +30; i++) {
-            BinaryFileHelper.getInstance().writeIntValue(0);
-        }
+        
+        BinaryFileHelper.getInstance().goToByte(659522);
+        BinaryFileHelper.getInstance().writeIntValue(185);
+
+        BinaryFileHelper.getInstance().goToByte(648539);
+        BinaryFileHelper.getInstance().writeIntValue(32);
+        BinaryFileHelper.getInstance().writeIntValue(24);
+
+        BinaryFileHelper.getInstance().goToByte(648666);
+        BinaryFileHelper.getInstance().writeIntValue(04);
+        BinaryFileHelper.getInstance().writeIntValue(24);
+
+        BinaryFileHelper.getInstance().goToByte(649070);
+        BinaryFileHelper.getInstance().writeIntValue(196);
+        BinaryFileHelper.getInstance().writeIntValue(23);
+
+        BinaryFileHelper.getInstance().goToByte(649127);
+        BinaryFileHelper.getInstance().writeIntValue(168);
+        BinaryFileHelper.getInstance().writeIntValue(23);
+
+        BinaryFileHelper.getInstance().goToByte(649466);
+        BinaryFileHelper.getInstance().writeIntValue(44);
+        BinaryFileHelper.getInstance().writeIntValue(185);
+
+        BinaryFileHelper.getInstance().goToByte(649327);
+        BinaryFileHelper.getInstance().writeIntValue(120);
+        BinaryFileHelper.getInstance().writeIntValue(01);
+        BinaryFileHelper.getInstance().writeIntValue(81);
+        
+ 
+         // So those two strings are available
+//         begin = 1283900;
+//         BinaryFileHelper.getInstance().goToByte(begin);
+//         end = begin + 12;
+//         BinaryFileHelper.getInstance().writeHex("L2 Champions");
+//         for (int i = end; i<=end +16; i++) {
+//            BinaryFileHelper.getInstance().writeIntValue(0);
+//        }
+//         
+//         begin = 1283948;
+//         BinaryFileHelper.getInstance().goToByte(begin);
+//         end = begin + 13;
+//         BinaryFileHelper.getInstance().writeHex("Prom. from L2");
+//         for (int i = end; i<=end +30; i++) {
+//            BinaryFileHelper.getInstance().writeIntValue(0);
+//        }
     }        
     
     /**
@@ -1775,5 +1818,29 @@ public class PatchGame implements ActionListener {
         for (int i = 0; i<=7; i++) {
         BinaryFileHelper.getInstance().writeIntValue(0);
         }
+    }
+    
+    private void renameEnglishScotish() {
+        
+        // Premiership
+        
+        
+        // Division 1
+        
+        
+        // Division 2
+        
+        
+        // Division 3
+        
+        
+        // Conference
+        
+        
+        // History
+        
+        
+        // Short name
+        
     }
 }

@@ -285,7 +285,7 @@ public class Locations {
             Locations.DIV2A.add(1105596);
             Locations.DIV2A.add(1105672);
             Locations.DIV2A.add(1105744);
-            Locations.DIV2A.add(1105784);
+            //Locations.DIV2A.add(1105784);
             Locations.DIV2A.add(1105864);
             Locations.DIV2A.add(1105959);
             Locations.DIV2A.add(1106015);
@@ -298,10 +298,10 @@ public class Locations {
             Locations.DIV2A.add(1106480);
             Locations.DIV2A.add(1110752);
             Locations.DIV2A.add(1242472);
-            Locations.DIV2A.add(1242536); 
-            Locations.DIV2A.add(1242564); 
-            Locations.DIV2A.add(1242642); 
-            Locations.DIV2A.add(1242656); 
+            //Locations.DIV2A.add(1242536); 
+            //Locations.DIV2A.add(1242564); 
+            //Locations.DIV2A.add(1242642); 
+            //Locations.DIV2A.add(1242656); 
             Locations.DIV2A.add(1258124); 
         }
 
