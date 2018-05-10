@@ -1820,27 +1820,90 @@ public class PatchGame implements ActionListener {
         }
     }
     
-    private void renameEnglishScotish() {
+    private void renameEnglishScotish() throws IOException {
         
         // Premiership
-        
+        // Premier L. +1 space
+        int[] factorial = {1139764,1139824,1218994,1219060,1219148,1219204,1219256,1219336,1219419,1219475,1219512,
+            1219560,1219640,1219740,1219768,1219796,1219816,1240031,1273288,1288854,1288928,1289024,1289088,1289231,1289295,1302584};
+        for (Integer spot : factorial) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Premier L. ");
+         }
         
         // Division 1
-        
-        
+        // Championship
+        int[] factorialDiv1 = {1105562,1105987,1106043,1240951,1242427};
+         for (Integer spot : factorialDiv1) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Championship");
+         }
+         
+         int[] factorialDiv1b = {1105628,1105716,1105772,1105824,1105904,1106084,1106128,1106312,1106500,
+             1106528,1106556,1110764,1219830,1240172,1240436,1240464};
+         for (Integer spot : factorialDiv1b) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Champions.");
+         }
+         
+         int[] factorialDiv1c = { 1240003,1240746,1240760,1273264,1289624,1289768,1289788};
+         for (Integer spot : factorialDiv1c) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("Championship");
+         }
+         BinaryFileHelper.getInstance().goToByte(1272468);
+         BinaryFileHelper.getInstance().writeHex("Cham");
+                
         // Division 2
+        // League One
+        int[] factorialDiv2 = { 1139812,1168450,1168516,1168604,1168660,1168712,1168792,1168875,1168931,
+            1168968,1169012,1169084,1169104,1169132,1169160,1240140,1240376,1240404,1241070,1241084};
         
+        for (Integer spot : factorialDiv2) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("League One");
+         }
+        
+        int[] factorialDiv2b = { 1239975,1240694,1240708,1273240,1289592,1289716,1289736 };
+         for (Integer spot : factorialDiv2b) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("League One  ");
+         }
+         
+         BinaryFileHelper.getInstance().goToByte(1272460);
+         BinaryFileHelper.getInstance().writeHex("One ");
         
         // Division 3
+        // League Two
+        int[] factorialDiv3 = {  1139800,1218958,1219028,1219104,1219176,1219216,1219296,1219391,1219447,
+            1219488,1219540,1219620,1219664,1219692,1219720,1240108,1240316,1240344};
         
+        for (Integer spot : factorialDiv3) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("League Two");
+         }
+        
+        int[] factorialDiv3b = { 1239943,1240634,1240652,1273216,1289556,1289656,1289680 };
+         for (Integer spot : factorialDiv3b) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("League Two    ");
+         }
+         
+         BinaryFileHelper.getInstance().goToByte(1272452);
+         BinaryFileHelper.getInstance().writeHex("Two ");
         
         // Conference
+        // National
+         int[] factorialConference = { 1139748,1139788,1240076,1240256,1240284,1240596,1273196,1288814,1288892,1288976,1289056,
+        1289100,1289140,1289199,1289263,1289308,1289400,1289436,1289480,1289508,1289536};
         
-        
-        // History
-        
-        
-        // Short name
+         for (Integer spot : factorialConference) {
+            BinaryFileHelper.getInstance().goToByte(spot);
+            BinaryFileHelper.getInstance().writeHex("National L");
+         }
+         
+         BinaryFileHelper.getInstance().goToByte(1272444);
+         BinaryFileHelper.getInstance().writeHex("Nat.");
         
     }
 }
