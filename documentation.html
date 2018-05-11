@@ -9,8 +9,8 @@
     </head>
     <body>
         <h1>USM98-99 Tweaker user manual</h1>
-        <p>Version of the document: 1.2<p/>
-            <p>Applies to: USM98-99 Tweaker 1.2<p/>
+        <p>Version of the document: 1.3<p/>
+            <p>Applies to: USM98-99 Tweaker 1.3<p/>
         <h2>1- Introduction</h2>
         <h3>1.1- Disclaimer</h3>
             <p>By using this application, you accept the below elements:</p>
@@ -23,6 +23,8 @@
             <ul>
                 <li>double click on the <em>Usm9899Tweaker.jar</em> file ;</li>
                 <li>open the terminal, go to the directory the file is located in, and enter this command: <br/><em>java -jar Usm9899Tweaker.jar</em> .</li>
+                <br/>
+                Note: on Mac OS, the first time you will get a warning security message. To authorize the tweaker to run, you have to go to system -> security to authorize it. You will have to do this only the first time.
             </ul>
         <h3>1.3- About</h3>
             <p>This tweaker was created with the idea to upgrade and customize the behavior of the original game.</p>
@@ -107,7 +109,7 @@
             <p>There is not registered issue yet.</p>
 		<h4>3.1.6- Enable or disable the possibility to be fired</h4>
         <h5>Background</h5>
-            <p>This feature allows you to not to be fired when having bad or unexpected results on the field... or in the bank.</p>
+            <p>This feature allows you to not to be fired when having bad or unexpected results on the field... or in the bank. Note: it does not cover for illegal activities.</p>
         <h5>How it works</h5>
             <p>We edited some conditions disable the mecanism that fire the player.</p>
         <h5>Issues</h5>
@@ -125,6 +127,24 @@
         <h5>How it works</h5>
             <p>We edited some offsets. We were limited both by the original size available in memory and the space available on screen.</p>
         <h5>Issues</h5>
-            <p>There is not registered issue yet.</p>       
+            <p>There is not registered issue yet.</p> 
+        <h4>3.1.9- Rename Leagues</h4>
+        <h5>Background</h5>
+            <p>This feature allows you to rename the french, spanish, english and scottish leagues to their 2017-2018 names .</p>
+        <h5>How it works</h5>
+            <p>We used unused strings (eg the italian Serie C) to add new leagues names. Then
+            we changed many dozen of memory calls to be able to use such strings. Infortunately,
+         there was not enough "room" to do a perfect job, we had to deal with the game limitations so sometimes strings are diminutives. The scottish premiership share its name with the british premier league.</p>
+        <h5>Issues</h5>
+            <p>There is not registered issue yet.</p>  
+        <h4>3.1.10- Enable the looser manager feature (BETA)</h4>
+        <h5>Background</h5>
+            <p>When you do a very bad season with your club, and want to change to another one, the most part of the clubs who look for a new coach will reject your application.
+            This feature of the tweaker is supposed to make every of your application successfull.
+            </p>
+        <h5>How it works</h5>
+            <p>We changed some memory calls.</p>
+        <h5>Issues</h5>
+            <p>There is not registered issue yet.</p>               
     </body>
 </html>

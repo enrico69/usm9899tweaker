@@ -48,6 +48,7 @@ public class PatchGame implements ActionListener {
     final private JButton renameELButton = new JButton("");
     final private JButton renameLeagueButton = new JButton("");
     final private JButton renameVariousButton = new JButton("");
+    final private JButton looserButton = new JButton("");
 
     /* Variables use for processing */
     private boolean firstTime = false;
@@ -141,6 +142,9 @@ public class PatchGame implements ActionListener {
 
                 // Check firing mode
                 this.checkIfFiringStandardMode();
+                
+                // Check looser manager
+                this.updateLooserButton();
 
                 // Opening the patching panel
                 this.openPanel(lFirstQtyLoanVal[0], startingYear, promRelegFr, promRelegIt);
@@ -192,7 +196,7 @@ public class PatchGame implements ActionListener {
         // Screen definition
         this.patchScreen = new JFrame();
         this.patchScreen.setTitle("Patch game");
-        this.patchScreen.setSize(800, 300);
+        this.patchScreen.setSize(800, 350);
         this.patchScreen.setLocation(150, 150);
         this.patchScreen.setResizable(false);
         ImageIcon img = new ImageIcon(MainMenu.iconName);
@@ -316,7 +320,7 @@ public class PatchGame implements ActionListener {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 5;
-        JLabel firingMenuLabel = new JLabel("Enable / Disable the fact that you can be fired");
+        JLabel firingMenuLabel = new JLabel("Enable / Disable the fact that you can be fired (see doc.)");
         windowContent.add(firingMenuLabel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -423,7 +427,7 @@ public class PatchGame implements ActionListener {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 10;
-        JLabel renameLeagueLabel = new JLabel("Rename Leagues (See doc.)");
+        JLabel renameLeagueLabel = new JLabel("Rename Leagues (see doc.)");
         windowContent.add(renameLeagueLabel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -435,14 +439,14 @@ public class PatchGame implements ActionListener {
         this.renameLeagueButton.setPreferredSize(new Dimension(120, 20));
         windowContent.add(this.renameLeagueButton, c);
         this.renameLeagueButton.addActionListener((ActionListener) this);
-
+        
         //-----------------------------------------
         // Rename various strings
         //-----------------------------------------
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 11;
-        JLabel renameVariousLabel = new JLabel("Rename various strings (See doc.)");
+        JLabel renameVariousLabel = new JLabel("Rename various strings (see doc.)");
         windowContent.add(renameVariousLabel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -454,6 +458,24 @@ public class PatchGame implements ActionListener {
         this.renameVariousButton.setPreferredSize(new Dimension(120, 20));
         windowContent.add(this.renameVariousButton, c);
         this.renameVariousButton.addActionListener((ActionListener) this);
+
+        //-----------------------------------------
+        // Looser Manager
+        //-----------------------------------------
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 12;
+        JLabel looserLabel = new JLabel("Everybody wants a looser (see doc.)");
+        windowContent.add(looserLabel, c);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 12;
+
+        this.looserButton.setPreferredSize(new Dimension(120, 20));
+        windowContent.add(this.looserButton, c);
+        this.looserButton.addActionListener((ActionListener) this);
 
         //-----------------------------------------
         // Display
@@ -670,6 +692,19 @@ public class PatchGame implements ActionListener {
             this.changeFormStatus(false);
             try {
                 this.renameVarious();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.changeFormStatus(true);
+        }
+        
+        // Handle of the looser manager
+        if (ev.getSource() == this.looserButton) {
+            this.changeFormStatus(false);
+            try {
+                System.out.println("Switching looser mode...");
+                this.switchLooserMode();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this.patchScreen, "Sorry, impossible to perform the operation", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(PatchGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -980,6 +1015,68 @@ public class PatchGame implements ActionListener {
             }
 
             currentIndex++;
+        }
+    }
+    
+    /**
+     * Check if the looser mode is enabled
+     * 
+     * @return
+     * @throws IOException 
+     */
+    private boolean checkLooserMode() throws IOException
+    {
+        byte[] readVal = BinaryFileHelper.getInstance().getFilePart(667421, 1);
+        System.out.println("Looser mode: " + readVal[0] );
+        if (readVal[0] == -116) { // @TODO also check the second part (see below)
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Swtich the looser mode
+     * @throws IOException 
+     */
+    private void switchLooserMode() throws IOException
+    {
+        if (this.checkLooserMode()) {
+            BinaryFileHelper.getInstance().goToByte(667421);
+            BinaryFileHelper.getInstance().writeIntValue(142);
+        
+            BinaryFileHelper.getInstance().goToByte(667436);
+            BinaryFileHelper.getInstance().writeIntValue(59);
+            BinaryFileHelper.getInstance().writeIntValue(198);
+            BinaryFileHelper.getInstance().writeIntValue(15);
+            BinaryFileHelper.getInstance().writeIntValue(143);
+            BinaryFileHelper.getInstance().writeIntValue(224);
+        } else {
+            BinaryFileHelper.getInstance().goToByte(667421);
+            BinaryFileHelper.getInstance().writeIntValue(140);
+        
+            BinaryFileHelper.getInstance().goToByte(667436);
+            BinaryFileHelper.getInstance().writeIntValue(133);
+            BinaryFileHelper.getInstance().writeIntValue(246);
+            BinaryFileHelper.getInstance().writeIntValue(15);
+            BinaryFileHelper.getInstance().writeIntValue(142);
+            BinaryFileHelper.getInstance().writeIntValue(242);
+        }
+        
+        
+        updateLooserButton();
+    }
+    
+    /**
+     * Set the looser button label
+     * 
+     * @throws IOException 
+     */
+    private void updateLooserButton() throws IOException
+    {
+        if(this.checkLooserMode()) {
+            this.looserButton.setText("Disable");
+        }  else {
+            this.looserButton.setText("Enable");
         }
     }
 
